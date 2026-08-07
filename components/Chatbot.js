@@ -61,8 +61,10 @@ export default function Chatbot() {
     try {
       const res = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: history }) });
       if (!res.ok || !res.body) {
+        // Mostra il MESSAGGIO REALE dell'errore (con dettaglio da OpenRouter)
         const err = await res.json().catch(() => ({}));
-        setMsgs((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: "⚠️ " + (err.error || "Errore di rete.") }; return c; });
+        const full = "⚠️ " + (err.error || "Errore di rete.") + (err.detail ? "\n\n**Dettaglio:** `" + err.detail + "`" : "");
+        setMsgs((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: full }; return c; });
         setBusy(false); return;
       }
       const reader = res.body.getReader();
@@ -75,7 +77,7 @@ export default function Chatbot() {
         setMsgs((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: acc }; return c; });
       }
     } catch (e) {
-      setMsgs((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: "⚠️ Non riesco a contattare il servizio. Verifica il deploy di /api/chat." }; return c; });
+      setMsgs((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: "⚠️ Non riesco a contattare il servizio. Verifica il deploy di /api/chat.\n\n`" + String(e).slice(0, 200) + "`" }; return c; });
     } finally { setBusy(false); taRef.current?.focus(); }
   }
 
