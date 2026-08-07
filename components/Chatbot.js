@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ICON } from "../lib/assets";
 
 function md(t) {
   t = t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -98,7 +99,7 @@ export default function Chatbot() {
         <div id="ec-chat" role="dialog" aria-label="Assistente EasyChef">
           <div id="ec-head">
             <div className="ec-head-left">
-              <img src="/icon.jpg" alt="EasyChef" className="ec-head-logo" />
+              <img src={ICON} alt="EasyChef" className="ec-head-logo" />
               <div>
                 <div className="t">Assistente EasyChef</div>
                 <div className="s">Uso interno · prezzi, dossier, adempimenti</div>
