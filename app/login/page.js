@@ -23,7 +23,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(120deg,#0B4C8C,#083A6B)", padding: 20 }}>
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(120deg,#1F2937,#111827)", padding: 20 }}>
       <form onSubmit={submit} style={{ background: "#fff", borderRadius: 16, padding: "32px 28px", width: "100%", maxWidth: 380, boxShadow: "0 20px 60px rgba(0,0,0,.3)" }}>
         <div style={{ textAlign: "center", marginBottom: 10 }}>
           <img src={LOGO} alt="EasyChef" style={{ width: 130, height: "auto" }} />
