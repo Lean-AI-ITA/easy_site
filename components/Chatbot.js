@@ -89,8 +89,10 @@ export default function Chatbot() {
 
   return (
     <>
-      <button id="ec-fab" title="Assistente EasyChef (uso interno)" onClick={() => setOpen((o) => !o)}>
-        {open ? "✕" : <img src="/icon.jpg" alt="EasyChef" className="ec-fab-logo" />}
+      {/* Pulsante flottante: fumetto 💬 quando chiuso, ✕ quando aperto */}
+      <button id="ec-fab" title="Assistente EasyChef (uso interno)" onClick={() => setOpen((o) => !o)}
+        style={{ fontSize: 26, overflow: "visible", padding: 0 }}>
+        {open ? "✕" : "💬"}
       </button>
       {open && (
         <div id="ec-chat" role="dialog" aria-label="Assistente EasyChef">
