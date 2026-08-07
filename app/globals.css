@@ -192,3 +192,17 @@ summary{cursor:pointer}
 .ec-sugg button:hover{background:var(--blu-chiaro)}
 @media(max-width:560px){#ec-chat{right:12px;left:12px;width:auto;bottom:82px}}
 @media print{#ec-fab,#ec-chat,.hamb,.backdrop,.sidebar,.topbar{display:none!important}.app{grid-template-columns:1fr}.section{display:block!important}}
+
+/* ===== LOGO EASYCHEF ===== */
+.logo-card{background:#fff;border-radius:12px;padding:10px 12px;display:inline-block;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.brand-logo{width:150px;height:auto;display:block}
+@media(max-width:900px){.brand-logo{width:130px}}
+/* FAB con icona */
+#ec-fab{overflow:hidden;padding:0}
+.ec-fab-logo{width:100%;height:100%;object-fit:cover;border-radius:50%}
+/* Header chat */
+.ec-head-left{display:flex;align-items:center;gap:10px}
+.ec-head-logo{width:34px;height:34px;border-radius:9px;background:#fff;padding:2px;object-fit:contain;flex:0 0 auto}
+/* Barra avviso compliance/uso interno */
+#ec-notice{background:#FFF7E6;border-bottom:1px solid #F1D9A0;color:#7a5b00;font-size:11px;line-height:1.4;padding:7px 14px;text-align:center}
+#ec-notice b{color:#5c4400}

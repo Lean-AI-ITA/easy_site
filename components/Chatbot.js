@@ -32,6 +32,12 @@ const SUGG = [
   { q: "Quali adempimenti normativi deve fare la software house?", label: "Adempimenti" },
 ];
 
+const WELCOME =
+  "Ciao! Sono l'assistente **interno** del dossier **EasyChef × Caterline**. " +
+  "Ti informo che stai interagendo con un **sistema di IA** (Reg. UE 2024/1689 — *AI Act*, art. 50). " +
+  "Posso spiegarti prezzi, requisiti software, segmenti, adempimenti e simulare un preventivo.\n\n" +
+  "⚠️ **Non inserire dati personali o sensibili** (nomi di ospiti, dati sanitari, ecc.).";
+
 export default function Chatbot() {
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -44,9 +50,7 @@ export default function Chatbot() {
   const scrollBottom = () => { const el = msgsRef.current; if (el) el.scrollTop = el.scrollHeight; };
   useEffect(() => { scrollBottom(); }, [msgs]);
   useEffect(() => {
-    if (open && msgs.length === 0) {
-      setMsgs([{ role: "assistant", content: "Ciao! Sono l'assistente del dossier **EasyChef × Caterline**. Posso spiegarti prezzi, requisiti software, segmenti, adempimenti e simulare un preventivo. Cosa ti serve?" }]);
-    }
+    if (open && msgs.length === 0) setMsgs([{ role: "assistant", content: WELCOME }]);
     if (open) setTimeout(() => taRef.current?.focus(), 100);
   }, [open]);
 
@@ -61,7 +65,6 @@ export default function Chatbot() {
     try {
       const res = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ messages: history }) });
       if (!res.ok || !res.body) {
-        // Mostra il MESSAGGIO REALE dell'errore (con dettaglio da OpenRouter)
         const err = await res.json().catch(() => ({}));
         const full = "⚠️ " + (err.error || "Errore di rete.") + (err.detail ? "\n\n**Dettaglio:** `" + err.detail + "`" : "");
         setMsgs((m) => { const c = [...m]; c[c.length - 1] = { role: "assistant", content: full }; return c; });
@@ -86,16 +89,26 @@ export default function Chatbot() {
 
   return (
     <>
-      <button id="ec-fab" title="Assistente EasyChef" onClick={() => setOpen((o) => !o)}>{open ? "✕" : "💬"}</button>
+      <button id="ec-fab" title="Assistente EasyChef (uso interno)" onClick={() => setOpen((o) => !o)}>
+        {open ? "✕" : <img src="/icon.jpg" alt="EasyChef" className="ec-fab-logo" />}
+      </button>
       {open && (
         <div id="ec-chat" role="dialog" aria-label="Assistente EasyChef">
           <div id="ec-head">
-            <div>
-              <div className="t">🍽️ Assistente EasyChef</div>
-              <div className="s">Chiedimi del dossier, prezzi, adempimenti…</div>
+            <div className="ec-head-left">
+              <img src="/icon.jpg" alt="EasyChef" className="ec-head-logo" />
+              <div>
+                <div className="t">Assistente EasyChef</div>
+                <div className="s">Uso interno · prezzi, dossier, adempimenti</div>
+              </div>
             </div>
             <button onClick={() => setOpen(false)} aria-label="Chiudi">✕</button>
           </div>
+
+          <div id="ec-notice">
+            🔒 <b>Uso interno.</b> Assistente IA (AI Act, art. 50). <b>Non inserire dati personali o sensibili.</b>
+          </div>
+
           <div id="ec-msgs" ref={msgsRef}>
             {msgs.map((m, i) => {
               const last = i === msgs.length - 1;
@@ -107,13 +120,15 @@ export default function Chatbot() {
               );
             })}
           </div>
+
           {showSugg && (
             <div className="ec-sugg">
               {SUGG.map((s, i) => (<button key={i} onClick={() => send(s.q)}>{s.label}</button>))}
             </div>
           )}
+
           <div id="ec-input">
-            <textarea ref={taRef} rows={1} placeholder="Scrivi una domanda…" value={draft} onChange={autosize} onKeyDown={onKey} />
+            <textarea ref={taRef} rows={1} placeholder="Scrivi una domanda (niente dati personali)…" value={draft} onChange={autosize} onKeyDown={onKey} />
             <button id="ec-send" onClick={() => send()} disabled={busy}>➤</button>
           </div>
         </div>

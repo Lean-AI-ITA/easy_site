@@ -23,11 +23,11 @@ export default function LoginPage() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(120deg,#0B4C8C,#083A6B)", padding: 20 }}>
       <form onSubmit={submit} style={{ background: "#fff", borderRadius: 16, padding: "32px 28px", width: "100%", maxWidth: 380, boxShadow: "0 20px 60px rgba(0,0,0,.3)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
-          <span style={{ background: "#C40F1C", width: 36, height: 36, borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20 }}>🍽️</span>
-          <div style={{ fontWeight: 800, fontSize: 19, color: "#1A1F2B" }}>EasyChef × Caterline</div>
+        <div style={{ textAlign: "center", marginBottom: 10 }}>
+          <img src="/logo.jpg" alt="EasyChef" style={{ width: 130, height: "auto" }} />
+          <div style={{ fontWeight: 700, fontSize: 15, color: "#6B7280", marginTop: -6 }}>× Caterline</div>
         </div>
-        <p style={{ color: "#6B7280", fontSize: 13.5, margin: "0 0 20px" }}>Dossier riservato. Inserisci la password per accedere.</p>
+        <p style={{ color: "#6B7280", fontSize: 13.5, margin: "0 0 20px", textAlign: "center" }}>Dossier riservato. Inserisci la password per accedere.</p>
         <label style={{ fontSize: 13, fontWeight: 600, color: "#1A1F2B", display: "block", marginBottom: 6 }}>Password</label>
         <input type="password" value={pw} onChange={(e) => setPw(e.target.value)} autoFocus placeholder="••••••••"
           style={{ width: "100%", padding: "11px 13px", border: "1px solid #E4E7EC", borderRadius: 10, fontSize: 15, marginBottom: 14, boxSizing: "border-box" }} />

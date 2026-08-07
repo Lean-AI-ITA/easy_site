@@ -2,6 +2,7 @@ import "./globals.css";
 export const metadata = {
   title: "EasyChef × Caterline — Dossier operativo",
   description: "Dossier interattivo: sviluppo software, preventivatore e analisi di mercato, con assistente AI.",
+  icons: { icon: "/favicon.png", apple: "/logo.jpg" },
 };
 export const viewport = { width: "device-width", initialScale: 1, maximumScale: 5 };
 export default function RootLayout({ children }) {

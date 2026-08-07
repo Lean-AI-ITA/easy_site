@@ -24,7 +24,7 @@ export default function PreventivoPage() {
       <div className="wrap" style={{ maxWidth: 1140, margin: "0 auto" }}>
         <Preventivatore />
         <p style={{ textAlign: "center", color: "var(--muted)", fontSize: 12, marginTop: 20 }}>
-          EasyChef × Caterline · Akinai — pagina condivisibile del preventivatore
+          EasyChef × Caterline · EasyChef — pagina condivisibile del preventivatore
         </p>
       </div>
     </div>
