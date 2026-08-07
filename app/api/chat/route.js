@@ -48,24 +48,37 @@ export async function POST(req) {
     return new Response(JSON.stringify({ error: "Nessun messaggio valido." }), { status: 400, headers: { "Content-Type": "application/json" } });
   }
 
-  const orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-      "HTTP-Referer": process.env.SITE_URL || "https://easychef-caterline.vercel.app",
-      "X-Title": "EasyChef × Caterline Dossier",
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
-      temperature: 0.2, max_tokens: 900, stream: true,
-    }),
-  });
+  let orRes;
+  try {
+    orRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": process.env.SITE_URL || "https://easychef-caterline.vercel.app",
+        "X-Title": "EasyChef x Caterline Dossier",
+      },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
+        temperature: 0.2, max_tokens: 900, stream: true,
+      }),
+    });
+  } catch (e) {
+    return new Response(JSON.stringify({ error: "Rete: non riesco a contattare OpenRouter.", detail: String(e).slice(0, 300) }),
+      { status: 502, headers: { "Content-Type": "application/json" } });
+  }
 
   if (!orRes.ok || !orRes.body) {
-    const detail = await orRes.text().catch(() => "");
-    return new Response(JSON.stringify({ error: "Errore dal provider LLM.", detail: detail.slice(0, 500) }),
+    // Estrai il messaggio d'errore REALE di OpenRouter (JSON o testo)
+    let detail = "";
+    try {
+      const txt = await orRes.text();
+      try { const j = JSON.parse(txt); detail = j?.error?.message || j?.error || txt; }
+      catch { detail = txt; }
+    } catch {}
+    const msg = `OpenRouter ha risposto ${orRes.status} usando il modello "${MODEL}".`;
+    return new Response(JSON.stringify({ error: msg, detail: String(detail).slice(0, 600) }),
       { status: 502, headers: { "Content-Type": "application/json" } });
   }
 
