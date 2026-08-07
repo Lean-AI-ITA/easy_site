@@ -1,6 +1,8 @@
 "use client";
 
+// app/login/page.js — logo EasyChef incorporato (base64), non dipende da /public.
 import { useState } from "react";
+import { LOGO } from "../../lib/assets";
 
 export default function LoginPage() {
   const [pw, setPw] = useState("");
@@ -24,7 +26,7 @@ export default function LoginPage() {
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "linear-gradient(120deg,#0B4C8C,#083A6B)", padding: 20 }}>
       <form onSubmit={submit} style={{ background: "#fff", borderRadius: 16, padding: "32px 28px", width: "100%", maxWidth: 380, boxShadow: "0 20px 60px rgba(0,0,0,.3)" }}>
         <div style={{ textAlign: "center", marginBottom: 10 }}>
-          <img src="/logo.jpg" alt="EasyChef" style={{ width: 130, height: "auto" }} />
+          <img src={LOGO} alt="EasyChef" style={{ width: 130, height: "auto" }} />
           <div style={{ fontWeight: 700, fontSize: 15, color: "#6B7280", marginTop: -6 }}>× Caterline</div>
         </div>
         <p style={{ color: "#6B7280", fontSize: 13.5, margin: "0 0 20px", textAlign: "center" }}>Dossier riservato. Inserisci la password per accedere.</p>
