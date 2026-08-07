@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { DOSSIER_BODY } from "../lib/dossierBody";
 import { initDossier } from "../lib/initDossier";
+import { LOGO } from "../lib/assets";
 
 export default function Dossier() {
   const ref = useRef(null);
@@ -12,6 +13,10 @@ export default function Dossier() {
     if (done.current) return;
     done.current = true;
     try { initDossier(); } catch (e) { console.error("initDossier:", e); }
+
+    // Logo sidebar incorporato (base64): non dipende da /public
+    const brandImg = document.querySelector(".brand-logo");
+    if (brandImg) brandImg.setAttribute("src", LOGO);
 
     // Link extra nella sidebar: preventivo pubblico + logout
     const nav = document.getElementById("nav");
